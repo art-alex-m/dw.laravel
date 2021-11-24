@@ -3,6 +3,7 @@
 namespace App\Models\Article;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Category.
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Category extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'article_categories';
 
     /**
@@ -21,5 +24,15 @@ class Category extends Model
     public function articles()
     {
         return $this->hasManyThrough(Article::class, ArticleToCategory::class);
+    }
+
+    /**
+     * Объект сортировки
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function treeNode()
+    {
+        return $this->hasOne(CategoryTree::class);
     }
 }
