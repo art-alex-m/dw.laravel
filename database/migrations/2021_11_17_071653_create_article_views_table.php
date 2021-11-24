@@ -13,11 +13,14 @@ class CreateArticleViewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('views', function (Blueprint $table) {
+        Schema::create('article_views', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_id')->comment('ID статьи')->constrained()->onDelete('CASCADE')->onUpdate(
-                'CASCADE'
-            );
+            $table->foreignId('article_id')
+                ->comment('ID статьи')
+                ->constrained()
+                ->onDelete('CASCADE')
+                ->onUpdate('CASCADE');
+
             $table->date('today')->nullable(false)->comment('Дата');
             $table->bigInteger('value')->default(0)->comment('Количество');
         });
@@ -30,6 +33,6 @@ class CreateArticleViewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('views');
+        Schema::dropIfExists('article_views');
     }
 }

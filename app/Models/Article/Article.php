@@ -40,4 +40,14 @@ class Article extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    /**
+     * Общее количество просмотров
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function totalViews()
+    {
+        return $this->hasOne(ViewTotal::class);
+    }
 }
