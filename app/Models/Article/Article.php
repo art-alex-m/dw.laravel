@@ -3,6 +3,9 @@
 namespace App\Models\Article;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class Article.
@@ -14,7 +17,7 @@ class Article extends Model
     /**
      * Изображение статьи.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne
      */
     public function image()
     {
@@ -24,9 +27,9 @@ class Article extends Model
     /**
      * Рубрики статьи.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     * @return HasManyThrough
      */
-    public function categories()
+    public function categories(): HasManyThrough
     {
         return $this->hasManyThrough(Category::class, ArticleToCategory::class);
     }
@@ -34,9 +37,9 @@ class Article extends Model
     /**
      * Комментарии статьи
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function comments()
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
@@ -44,10 +47,20 @@ class Article extends Model
     /**
      * Общее количество просмотров
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return HasOne
      */
-    public function totalViews()
+    public function totalViews(): HasOne
     {
         return $this->hasOne(ViewTotal::class);
+    }
+
+    /**
+     * Модели просмотров
+     *
+     * @return HasMany
+     */
+    public function views(): HasMany
+    {
+        return $this->hasMany(View::class);
     }
 }
