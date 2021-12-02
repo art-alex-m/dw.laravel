@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class Category.
  *
  * @package App\Models\Article
+ * @property int $id
+ * @property string $title
+ * @property string $created_at
+ * @property string $updated_at
  */
 class Category extends Model
 {
