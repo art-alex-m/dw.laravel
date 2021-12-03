@@ -13,4 +13,8 @@ class View extends Model
 {
     protected $table = 'article_views';
     public $timestamps = false;
+
+    protected $casts = [
+        'today' => 'date:Y-m-d',
+    ];
 }
