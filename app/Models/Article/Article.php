@@ -31,7 +31,7 @@ class Article extends Model
      */
     public function categories(): HasManyThrough
     {
-        return $this->hasManyThrough(Category::class, ArticleToCategory::class);
+        return $this->hasManyThrough(Category::class, ArticleToCategory::class, secondKey: 'id');
     }
 
     /**

@@ -13,7 +13,7 @@ class UserFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->name(),
@@ -30,12 +30,25 @@ class UserFactory extends Factory
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-    public function unverified()
+    public function unverified(): static
     {
         return $this->state(function (array $attributes) {
             return [
                 'email_verified_at' => null,
             ];
         });
+    }
+
+    /**
+     * Создает пользователя как супер администратора с id 1
+     *
+     * @return UserFactory
+     */
+    public function asSuperAdmin(): static
+    {
+        return $this->state(fn() => [
+            'id' => 1,
+            'email' => 'admin@super.com',
+        ]);
     }
 }

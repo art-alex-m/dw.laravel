@@ -29,7 +29,7 @@ class ArticleSeeder extends Seeder
         ArticleImageFactory $imageFactory
     ) {
         $articleFactory
-            ->count(25)
+            ->count(50)
             ->withStartId()
             ->withDifferentStatus()
             ->has($imageFactory, 'image')
