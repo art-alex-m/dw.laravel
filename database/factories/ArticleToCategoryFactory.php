@@ -54,13 +54,53 @@ class ArticleToCategoryFactory extends Factory
     /**
      * @return ArticleToCategoryFactory
      */
+    public function withDbCategories(): static
+    {
+        return $this->state(function (){
+            $generator = $this->getDbCategoryIdGenerator();
+            $data = ['category_id' => $generator->current()];
+            $generator->next();
+
+            return $data;
+        });
+    }
+
+    /**
+     * @return ArticleToCategoryFactory
+     */
     public function withRandomCategory(): static
     {
         return $this->state(
             new Sequence(
-                fn() => ['category_id' => Category::query()->inRandomOrder()->first('id')],
+                fn() => ['category_id' => Category::query()->where('id', '!=', 1)->inRandomOrder()->first('id')],
             )
         );
+    }
+
+    /**
+     * @return ArticleToCategoryFactory
+     */
+    public function withRandomArticle(): static
+    {
+        return $this->state(
+            new Sequence(
+                fn() => ['article_id' => Article::query()->inRandomOrder()->first('id')],
+            )
+        );
+    }
+
+    /**
+     * @return Generator
+     */
+    protected function getDbCategoryIdGenerator(): Generator
+    {
+        static $generator;
+
+        if (null === $generator || !$generator->valid()) {
+            $generator = $this->dbCategoryIdGenerator();
+        }
+
+        return $generator;
     }
 
     /**
@@ -71,6 +111,17 @@ class ArticleToCategoryFactory extends Factory
         $data = Article::query()->pluck('id');
         foreach ($data as $articleId) {
             yield $articleId;
+        }
+    }
+
+    /**
+     * @return Generator
+     */
+    protected function dbCategoryIdGenerator(): Generator
+    {
+        $data = Category::query()->where('id', '!=', 1)->pluck('id');
+        foreach ($data as $id) {
+            yield $id;
         }
     }
 }

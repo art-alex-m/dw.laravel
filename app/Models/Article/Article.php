@@ -2,9 +2,10 @@
 
 namespace App\Models\Article;
 
+use App\Enum\ArticleStatusEnum;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -27,11 +28,11 @@ class Article extends Model
     /**
      * Рубрики статьи.
      *
-     * @return HasManyThrough
+     * @return BelongsToMany
      */
-    public function categories(): HasManyThrough
+    public function categories(): BelongsToMany
     {
-        return $this->hasManyThrough(Category::class, ArticleToCategory::class, secondKey: 'id');
+        return $this->belongsToMany(Category::class, 'article_to_categories');
     }
 
     /**
@@ -62,5 +63,17 @@ class Article extends Model
     public function views(): HasMany
     {
         return $this->hasMany(View::class);
+    }
+
+    /**
+     * Ограничивает выборку опубликованными статьями.
+     *
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopePublished($query)
+    {
+        return $query->where('status', '=', ArticleStatusEnum::PUBLISHED);
     }
 }

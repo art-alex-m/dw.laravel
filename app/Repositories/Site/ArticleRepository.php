@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Site;
 
-use App\Enum\ArticleStatusEnum;
 use App\Models\Article\Article;
 use App\Models\Article\Category;
 use Illuminate\Database\Eloquent\Collection;
@@ -26,15 +25,34 @@ class ArticleRepository
     {
         $query = Article::query()
             ->with(['image'])
-            ->where('status', '=', ArticleStatusEnum::PUBLISHED)
+            ->published()
             ->latest()
             ->take($count);
 
         if ($category instanceof Category) {
-            $query->join('article_to_categories as ac', 'ac.article_id', '=', 'articles.id')
+            $query
+                ->select('articles.*')
+                ->join('article_to_categories as ac', 'ac.article_id', '=', 'articles.id')
                 ->where('ac.category_id', '=', $category->id);
         }
 
         return $query->get();
+    }
+
+    /**
+     * Возвращает модель по слагу.
+     *
+     * @param string $slug
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
+     */
+    public function getBySlug(string $slug)
+    {
+        return Article::query()
+            ->withCount(['comments'])
+            ->with(['image', 'totalViews', 'categories'])
+            ->where('slug', '=', $slug)
+            ->published()
+            ->firstOrFail();
     }
 }

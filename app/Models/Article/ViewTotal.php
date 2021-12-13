@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
  * Class ViewTotal.
  *
  * @package App\Models\Article
+ *
+ * @property-read int $article_id
+ * @property-read int $total
  */
 class ViewTotal extends Model
 {
