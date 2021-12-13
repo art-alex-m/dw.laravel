@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Article\Category;
 use App\Models\Article\CategoryTree;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 /**
  * Class CategorySeeder.
@@ -49,6 +50,7 @@ class CategorySeeder extends Seeder
             $category = new Category();
             $category->title = $name;
             $category->id = $key;
+            $category->slug = Str::slug($name);
             $category->save();
         }
 

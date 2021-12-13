@@ -1,11 +1,10 @@
 <?php
 
-use App\Enum\UserStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUserStatus extends Migration
+class AddSlugArticles extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +13,8 @@ class AddUserStatus extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('status')->default(UserStatusEnum::ACTIVE)->nullable(false)->index();
+        Schema::table('articles', function (Blueprint $table) {
+            $table->string('slug', 500)->nullable(false)->unique();
         });
     }
 
@@ -26,8 +25,6 @@ class AddUserStatus extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('status');
-        });
+        Schema::dropColumns('articles', ['slug']);
     }
 }

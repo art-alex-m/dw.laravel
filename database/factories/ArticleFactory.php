@@ -8,6 +8,7 @@ use App\Lib\Factory\WithUserIdTrait;
 use App\Models\Article\Article;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Support\Str;
 
 /**
  * Class ArticleFactory.
@@ -28,12 +29,15 @@ class ArticleFactory extends Factory
      */
     public function definition(): array
     {
+        $title = $this->faker->sentence();
+
         return [
             'user_id' => 1,
             'status' => ArticleStatusEnum::PUBLISHED,
-            'title' => $this->faker->sentence(),
+            'title' => $title,
             'short' => $this->faker->sentences(asText: true),
             'text' => $this->faker->paragraphs(asText: true),
+            'slug' => Str::slug($title),
         ];
     }
 
