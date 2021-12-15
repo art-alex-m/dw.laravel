@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
-use App\Models\Article\Article;
 use App\Models\Article\Category;
 use App\Repositories\Site\ArticleRepository;
 use Illuminate\Contracts\View\View;
@@ -41,8 +40,17 @@ class ArticleController extends Controller
         return view('site.articles.index', compact('news'));
     }
 
-    public function view(Article $article)
+    /**
+     * Отображение детальной информации о статье.
+     *
+     * @param string $slug
+     *
+     * @return View
+     */
+    public function view(string $slug): View
     {
-        dd($article);
+        $article = $this->articleRepository->getBySlug($slug);
+
+        return view('site.articles.detail', ['item' => $article]);
     }
 }
