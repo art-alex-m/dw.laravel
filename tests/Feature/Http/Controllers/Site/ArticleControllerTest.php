@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Site;
 
-use App\Repositories\Site\ArticleRepository;
+use App\Models\Article\Article;
 use Tests\TestCase;
 
 class ArticleControllerTest extends TestCase
@@ -21,7 +21,7 @@ class ArticleControllerTest extends TestCase
         $response->assertViewIs('site.articles.index');
 
         /** @var \Illuminate\Database\Eloquent\Collection $articles */
-        $articles = app(ArticleRepository::class)->getPublishedNews(20, null);
+        $articles = Article::query()->published()->latest()->take(20)->get();
 
         $data = $articles
             ->flatMap(fn($item) => [

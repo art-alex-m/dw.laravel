@@ -2,14 +2,15 @@
 
 namespace App\Models\Article;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * Class ArticleToCategory.
  *
  * @package App\Models\Article
  */
-class ArticleToCategory extends Model
+class ArticleToCategory extends Pivot
 {
     public $timestamps = false;
+    protected $table = 'article_to_categories';
 }

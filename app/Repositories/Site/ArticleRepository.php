@@ -23,18 +23,17 @@ class ArticleRepository
      */
     public function getPublishedNews(int $count, ?Category $category): Collection|array
     {
-        $query = Article::query()
+        if ($category instanceof Category) {
+            $query = $category->articles();
+        } else {
+            $query = Article::query();
+        }
+
+        $query
             ->with(['image'])
             ->published()
             ->latest()
             ->take($count);
-
-        if ($category instanceof Category) {
-            $query
-                ->select('articles.*')
-                ->join('article_to_categories as ac', 'ac.article_id', '=', 'articles.id')
-                ->where('ac.category_id', '=', $category->id);
-        }
 
         return $query->get();
     }
@@ -51,7 +50,7 @@ class ArticleRepository
         return Article::query()
             ->withCount(['comments'])
             ->with(['image', 'totalViews', 'categories'])
-            ->where('slug', '=', $slug)
+            ->bySlug($slug)
             ->published()
             ->firstOrFail();
     }

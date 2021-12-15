@@ -3,6 +3,7 @@
 namespace App\Models\Article;
 
 use App\Enum\ArticleStatusEnum;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -32,7 +33,7 @@ class Article extends Model
      */
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'article_to_categories');
+        return $this->belongsToMany(Category::class, ArticleToCategory::class);
     }
 
     /**
@@ -68,12 +69,25 @@ class Article extends Model
     /**
      * Ограничивает выборку опубликованными статьями.
      *
-     * @param $query
+     * @param Builder $query
      *
-     * @return mixed
+     * @return Builder
      */
-    public function scopePublished($query)
+    public function scopePublished(Builder $query): Builder
     {
         return $query->where('status', '=', ArticleStatusEnum::PUBLISHED);
+    }
+
+    /**
+     * Выбирает запись по слагу.
+     *
+     * @param Builder $query
+     * @param string $slug
+     *
+     * @return Builder
+     */
+    public function scopeBySlug(Builder $query, string $slug): Builder
+    {
+        return $query->where('slug', '=', $slug);
     }
 }
