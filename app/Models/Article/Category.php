@@ -3,6 +3,7 @@
 namespace App\Models\Article;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -24,11 +25,11 @@ class Category extends Model
     /**
      * Статьи категории.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     * @return BelongsToMany
      */
-    public function articles()
+    public function articles(): BelongsToMany
     {
-        return $this->hasManyThrough(Article::class, ArticleToCategory::class);
+        return $this->belongsToMany(Article::class, ArticleToCategory::class);
     }
 
     /**
