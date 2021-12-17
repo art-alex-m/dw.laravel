@@ -35,7 +35,7 @@ class ArticleController extends Controller
      */
     public function index(?Category $category = null): View
     {
-        $news = $this->articleRepository->getPublishedNews(20, $category);
+        $news = $this->articleRepository->getPublished(20, $category);
 
         return view('site.articles.index', compact('news'));
     }

@@ -32,4 +32,9 @@
             {{$item->text}}
         </div>
     </div>
+
+    <h4 class="mt-5">Комментарии</h4>
+    <div id="comment-list">
+        <x-site.article.comment-list :article-id="$item->id" count="20"/>
+    </div>
 @endsection
