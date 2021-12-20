@@ -21,7 +21,7 @@ class ArticleRepository
      *
      * @return Collection|array
      */
-    public function getPublishedNews(int $count, ?Category $category): Collection|array
+    public function getPublished(int $count, ?Category $category): Collection|array
     {
         if ($category instanceof Category) {
             $query = $category->articles();
@@ -48,7 +48,7 @@ class ArticleRepository
     public function getBySlug(string $slug)
     {
         return Article::query()
-            ->withCount(['comments'])
+            ->withCount(['comments' => fn($q) => $q->published()])
             ->with(['image', 'totalViews', 'categories'])
             ->bySlug($slug)
             ->published()

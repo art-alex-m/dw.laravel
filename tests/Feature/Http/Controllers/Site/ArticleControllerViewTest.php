@@ -16,7 +16,7 @@ class ArticleControllerViewTest extends TestCase
      */
     public function test_viewPageIsCorrect()
     {
-        $item = Article::query()->withCount('comments')->published()->firstOrFail();
+        $item = Article::query()->withCount(['comments' => fn($q) => $q->published()])->published()->firstOrFail();
 
         $url = route('news.detail', $item, false);
         $response = $this->get($url);
