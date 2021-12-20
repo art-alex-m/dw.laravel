@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Events\ArticleIsShown;
 use App\Http\Controllers\Controller;
 use App\Models\Article\Category;
 use App\Repositories\Site\ArticleRepository;
@@ -50,6 +51,8 @@ class ArticleController extends Controller
     public function view(string $slug): View
     {
         $article = $this->articleRepository->getBySlug($slug);
+
+        ArticleIsShown::dispatch($article->id);
 
         return view('site.articles.detail', ['item' => $article]);
     }
