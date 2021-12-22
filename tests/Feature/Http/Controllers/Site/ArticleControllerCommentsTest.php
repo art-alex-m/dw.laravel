@@ -28,7 +28,7 @@ class ArticleControllerCommentsTest extends TestCase
         $response->assertOk();
 
         /** @var \Illuminate\Database\Eloquent\Collection $comments */
-        $comments = app(ArticleCommentRepository::class)->getPublished(20, $item->id);
+        $comments = app(ArticleCommentRepository::class)->getPublished(2, $item->id);
         $data = $comments->flatMap(fn($item) => [
             $item->user->name,
             $item->created_at,

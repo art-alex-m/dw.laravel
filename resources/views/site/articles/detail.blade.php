@@ -33,8 +33,19 @@
         </div>
     </div>
 
+    @php
+        $commentsOnPage = 2;
+    @endphp
+
     <h4 class="mt-5">Комментарии</h4>
     <div id="comment-list">
-        <x-site.article.comment-list :article-id="$item->id" count="20"/>
+        <x-site.article.comment-list :article-id="$item->id" :count="$commentsOnPage"/>
+    </div>
+    <div class="d-flex justify-content-center">
+        <x-site.article.comment-button
+                :article-id="$item->id"
+                :count="$commentsOnPage"
+                data-url="{{route('news.comments', [$item, 'limit' => -1])}}"
+                data-container-id="comment-list"/>
     </div>
 @endsection
