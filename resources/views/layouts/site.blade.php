@@ -40,7 +40,7 @@
 
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 pt-5">
                 <div class="content">
-                   @yield('content')
+                    @yield('content')
                 </div>
 
                 <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
@@ -50,5 +50,11 @@
                 </div>
             </div>
         </div>
+
+        <script src="//code.jquery.com/jquery-3.6.0.min.js"
+                integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+                crossorigin="anonymous"></script>
+
+        @stack('body-bottom')
     </body>
 </html>

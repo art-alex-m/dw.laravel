@@ -29,4 +29,19 @@ class ArticleCommentRepository
             ->take($count)
             ->get();
     }
+
+    /**
+     * Возвращает количество опубликованных комментариев для статьи
+     *
+     * @param int $articleId
+     *
+     * @return int
+     */
+    public function countPublished(int $articleId): int
+    {
+        return Comment::query()
+            ->byArticleId($articleId)
+            ->published()
+            ->count();
+    }
 }

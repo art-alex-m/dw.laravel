@@ -6,6 +6,7 @@ use App\Events\ArticleIsShown;
 use App\Services\ArticleViewsIncreaseService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\App;
 
 /**
  * Class ArticleViewsIncrease.
@@ -42,6 +43,9 @@ class ArticleViewsIncrease implements ShouldQueue
      */
     public function handle(ArticleIsShown $event)
     {
+        if (App::environment('testing')) {
+            return;
+        }
         $this->increaseService->increase($event->getArticleId());
     }
 }
