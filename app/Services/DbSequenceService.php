@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class DbSequenceService
 {
     /**
-     * Устанавливает последовательность для поле ня максимальное значение.
+     * Устанавливает последовательность для поля на максимальное значение.
      *
      * @param string $table
      * @param string $field

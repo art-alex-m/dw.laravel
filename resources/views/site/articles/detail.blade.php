@@ -38,6 +38,18 @@
     @endphp
 
     <h4 class="mt-5">Комментарии</h4>
+
+    @can(\App\Enum\PermissionsEnum::SITE_ARTICLE_COMMENT_CREATE)
+        <x-site.article.comment-form
+                id="comment-form"
+                save-url="{{route('comment.create', $item)}}"/>
+    @else
+        <div class="alert alert-warning" role="alert">
+            Только авторизованные пользователи могут оставлять комментарии. <a href="{{route('login')}}"
+                                                                               class="alert-link">Войти</a>
+        </div>
+    @endcan
+
     <div id="comment-list">
         <x-site.article.comment-list :article-id="$item->id" :count="$commentsOnPage"/>
     </div>

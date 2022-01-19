@@ -17,6 +17,12 @@ class Comment extends Model
 {
     protected $table = 'article_comments';
 
+    protected $fillable = [
+        'user_id',
+        'article_id',
+        'text',
+    ];
+
     /**
      * Возвращает связь с пользователем-автором.
      *
