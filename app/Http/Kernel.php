@@ -49,7 +49,7 @@ class Kernel extends HttpKernel
     /**
      * The application's route middleware.
      *
-     * These middleware may be assigned to groups or used individually.
+     * This middleware may be assigned to groups or used individually.
      *
      * @var array
      */
@@ -63,5 +63,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
     ];
 }

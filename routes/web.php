@@ -30,3 +30,4 @@ Route::get('/news/a/{article:slug}', [ArticleController::class, 'view'])->name('
 Route::get('/news', [ArticleController::class, 'index'])->name('news');
 
 Route::get('/news/{article}/comments', [ArticleCommentController::class, 'comments'])->name('news.comments');
+Route::post('/news/{article}/comment', [ArticleCommentController::class, 'create'])->name('comment.create');
